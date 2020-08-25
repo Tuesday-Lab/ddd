@@ -8,7 +8,7 @@ from ..events.schema import SampleResponseSerializer
 
 class SampleViewSet(viewsets.ViewSet):
 
-    def list(self, request):
+    def create(self, request):
         requests = SampleRequestSerializer(data=request.GET)
         requests.is_valid(raise_exception=True)
 

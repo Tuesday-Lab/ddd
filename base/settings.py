@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "controller.apps.ControllerConfig",
     "event.apps.EventConfig",
-    "order.apps.OrderConfig"
+    "order.apps.OrderConfig",
+    "user.apps.UserConfig",
 ]
 
 

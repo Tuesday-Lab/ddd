@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.gis.db import models as gis_model
+from django.db import models
 
 from ddd.event.infrastructure.models.base import TimestampMixin
 from ddd.event.infrastructure.models.user import User
@@ -25,3 +25,21 @@ class Event(TimestampMixin):
     description = models.TextField()
     registrable_time = models.DateTimeField(null=True)
     is_visible = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'event'
+
+
+class Order(TimestampMixin):
+    id = models.BigAutoField()
+    event = models.ForeignKey("Event", on_delete=models.CASCADE)
+    user = models.ForeignKey("User", on_delete=models.CASCADE)
+    status = models.CharField()
+    pay_method = models.CharField()
+    price = models.FloatField()
+    paid_at = models.DateTimeField(null=True)
+    canceled_at = models.DateTimeField(null=True)
+    refunded_at = models.DateTimeField(null=True)
+
+    class Meta:
+        db_table = 'order'

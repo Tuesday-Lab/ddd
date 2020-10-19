@@ -17,4 +17,4 @@ class SampleViewSet(viewsets.ViewSet):
 
 
 router = routers.DefaultRouter()
-router.register(r'events', SampleViewSet, basename="events")
+router.register(r'event_ddd', SampleViewSet, basename="event_ddd")

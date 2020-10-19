@@ -1,14 +1,14 @@
 from django.db import models
 
 
-class CreatedAtMixin(object):
+class CreatedAtMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
     class Meta:
         abstract = True
 
 
-class UpdatedAtMixin(object):
+class UpdatedAtMixin(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -16,4 +16,5 @@ class UpdatedAtMixin(object):
 
 
 class TimestampMixin(CreatedAtMixin, UpdatedAtMixin):
-    pass
+    class Meta:
+        abstract = True

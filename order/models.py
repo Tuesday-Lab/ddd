@@ -1,12 +1,13 @@
 from django.db import models
 
+from base import settings
 from base.db.mixin import TimestampMixin
 
 
 class Order(TimestampMixin):
     id = models.BigAutoField(primary_key=True)
     event = models.ForeignKey("event.Event", on_delete=models.CASCADE)
-    user = models.ForeignKey("user.User", on_delete=models.CASCADE)  # TODO custom User
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # TODO custom User
     status = models.CharField(max_length=10)
     pay_method = models.CharField(max_length=10)
     paid_amount = models.FloatField()

@@ -1,8 +1,26 @@
 from django.db import models
 # from django.contrib.gis.db import models as gis_models
+from pydantic import BaseModel, validator
 
 from base import settings
 from base.db.mixin import TimestampMixin
+from base.extension import ExtendedEnum
+
+
+class Currency(str, ExtendedEnum):
+    KRW = "KRW"
+    USD = "USD"
+
+
+class Money(BaseModel):
+    amount: int
+    currency: Currency
+
+    @validator('amount')
+    def amount_must_be_positive(cls, v):
+        if v < 0:
+            raise ValueError("amount should be grater then 0")
+        return v
 
 
 class Event(TimestampMixin, models.Model):
@@ -14,7 +32,7 @@ class Event(TimestampMixin, models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     kind = models.CharField(
         max_length=10,
         choices=EventKind.choices,

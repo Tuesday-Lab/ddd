@@ -23,6 +23,26 @@ class Money(BaseModel):
         return v
 
 
+class EventManager(models.Manager):
+    def create_new(self,
+                   title: str,
+                   slug: str,
+                   kind: str,
+                   money: Money,
+                   max_attendee_count: str,
+                   description: str
+                   ):
+        return super(EventManager, self).create(
+            title=title,
+            slug=slug,
+            kind=kind,
+            amount=money.amount,
+            currency=money.currency,
+            max_attendee_count=max_attendee_count,
+            description=description
+        )
+
+
 class Event(TimestampMixin, models.Model):
     class EventKind(models.TextChoices):
         NORMAL = "NORMAL"
@@ -48,6 +68,7 @@ class Event(TimestampMixin, models.Model):
     description = models.TextField()
     registrable_time = models.DateTimeField(null=True)
     is_visible = models.BooleanField(default=False)
+    objects = EventManager()
 
     class Meta:
         db_table = 'event'

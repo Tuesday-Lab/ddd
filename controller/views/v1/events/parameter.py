@@ -1,11 +1,7 @@
 from rest_framework import serializers
 
 from base.serializers import EnumField
-from event.models import Currency
-
-
-class SampleRequestSerializer(serializers.Serializer):
-    id = serializers.IntegerField(required=True)
+from event.vo import Currency
 
 
 class CreateEventParameters(serializers.Serializer):
@@ -14,7 +10,6 @@ class CreateEventParameters(serializers.Serializer):
     kind = serializers.CharField(max_length=10)
     amount = serializers.DecimalField(max_digits=11, decimal_places=2)
     currency = EnumField(choices=Currency)
-    # currency = serializers.ChoiceField(choices=Currency.values())
 
-    max_attendee_count = serializers.IntegerField()
+    max_attendee_count = serializers.IntegerField(min_value=0)
     description = serializers.CharField(max_length=1000)

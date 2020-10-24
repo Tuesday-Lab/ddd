@@ -19,7 +19,7 @@ class Money(BaseModel):
     @validator('amount')
     def amount_must_be_positive(cls, v):
         if v < 0:
-            raise ValueError("amount should be grater then 0")
+            raise ValueError("amount should be greater than 0")
         return v
 
 

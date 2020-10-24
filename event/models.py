@@ -4,23 +4,7 @@ from pydantic import BaseModel, validator
 
 from base import settings
 from base.db.mixin import TimestampMixin
-from base.extension import ExtendedEnum
-
-
-class Currency(str, ExtendedEnum):
-    KRW = "KRW"
-    USD = "USD"
-
-
-class Money(BaseModel):
-    amount: int
-    currency: Currency
-
-    @validator('amount')
-    def amount_must_be_positive(cls, v):
-        if v < 0:
-            raise ValueError("amount should be greater than 0")
-        return v
+from event.vo import Money
 
 
 class EventManager(models.Manager):

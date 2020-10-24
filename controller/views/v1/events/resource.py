@@ -3,7 +3,7 @@ from rest_framework.response import Response
 
 from event.services import service as event_service
 from ..events.parameter import CreateEventParameters
-from ..events.schema import SampleResponseSerializer, EventResponse
+from ..events.schema import EventResponse
 
 
 class SampleViewSet(viewsets.ViewSet):

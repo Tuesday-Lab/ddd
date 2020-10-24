@@ -1,6 +1,8 @@
 from django.db import transaction
 
-from event.models import Event, Money, Currency
+from base.exceptions import ConflictResource
+from event.models import Event, Money
+from event.vo import Currency
 
 
 class EventService:
@@ -15,8 +17,8 @@ class EventService:
                description: str
                ):
         if self._is_exists_duplicate_slug(slug):
-            #  TODO custom error handling
-            raise ValueError("already exist slug")
+            raise ConflictResource(detail="duplicate slug")
+
         event = Event.objects.create_new(
             title=title,
             slug=slug,

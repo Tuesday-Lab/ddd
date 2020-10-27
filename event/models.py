@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.gis.db import models as gis_models
+# from django.contrib.gis.db import models as gis_models
 
 from base import settings
 from base.db.mixin import TimestampMixin
@@ -25,7 +25,7 @@ class Event(TimestampMixin, models.Model):
     amount = models.DecimalField(decimal_places=2, max_digits=11)
     currency = models.CharField(max_length=3)
     max_attendee_count = models.IntegerField()
-    geo_location = gis_models.PointField(null=True, blank=True)
+    # geo_location = gis_models.PointField(null=True, blank=True)   # TODO 필요할 때 작업
     main_image = models.FilePathField()
     description = models.TextField()
     registrable_time = models.DateTimeField(null=True)

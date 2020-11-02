@@ -1,21 +1,23 @@
 from django.db import models
-# from django.contrib.gis.db import models as gis_models
-from pydantic import BaseModel, validator
 
 from base import settings
 from base.db.mixin import TimestampMixin
 from event.vo import Money
 
 
+# from django.contrib.gis.db import models as gis_models
+
+
 class EventManager(models.Manager):
-    def create_new(self,
-                   title: str,
-                   slug: str,
-                   kind: str,
-                   money: Money,
-                   max_attendee_count: str,
-                   description: str
-                   ):
+    def create_new(
+        self,
+        title: str,
+        slug: str,
+        kind: str,
+        money: Money,
+        max_attendee_count: str,
+        description: str,
+    ):
         return super(EventManager, self).create(
             title=title,
             slug=slug,
@@ -23,11 +25,11 @@ class EventManager(models.Manager):
             amount=money.amount,
             currency=money.currency,
             max_attendee_count=max_attendee_count,
-            description=description
+            description=description,
         )
 
 
-class Event(TimestampMixin, models.Model):
+class EventModel(TimestampMixin, models.Model):
     class EventKind(models.TextChoices):
         NORMAL = "NORMAL"
         EDU = "EDU"
@@ -55,4 +57,4 @@ class Event(TimestampMixin, models.Model):
     objects = EventManager()
 
     class Meta:
-        db_table = 'event'
+        db_table = "event"

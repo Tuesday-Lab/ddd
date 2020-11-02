@@ -11,11 +11,11 @@ repos:
       - id: flake8
         exclude: doc/|monitoring/|scripts/|tool/|test/
         args: [--max-line-length=85]
-  - repo: local
-    hooks:
-      - id: unit test
-        name: unit test
-        entry: python3 -m pytest -v
-        language: system
-        exclude: doc/|monitoring/|scripts/|tool/|test/
-        types: [ python ]
+#  - repo: local
+#    hooks:
+#      - id: unit test
+#        name: unit test
+#        entry: python3 -m pytest -v
+#        language: system
+#        exclude: doc/|monitoring/|scripts/|tool/|test/
+#        types: [ python ]

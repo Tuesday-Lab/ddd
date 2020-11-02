@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 
 
-class User(AbstractBaseUser):
+class UserModel(AbstractBaseUser):
     email = models.EmailField(
         max_length=255,
         unique=True,
@@ -31,3 +31,4 @@ class User(AbstractBaseUser):
 
     class Meta:
         db_table = 'user'
+

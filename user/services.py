@@ -1,23 +1,19 @@
 from django.db import transaction
 
 from base.exceptions import ConflictResource
-from user.models import User
+from user.repositories import UserRepo
 
 
 class UserService:
+    def __init__(self):
+        self.user_repo = UserRepo()
+
     @transaction.atomic
     def signup(self, email: str, name: str, password: str):
-        # TODO:  트랜잭션 관리 + 로직 + 인프라까지 다 가져도 되는걸까?
-        if self._is_exist(email):
-            raise ConflictResource(detail="duplicate name")
-
-        user = User.objects.create(
-            email=email, name=name, password=password
-        )
+        # 심플한 레포일 때도 서비스 레이어에서 트랜잭션 관리하는게 좋을까?
+        user = self.user_repo.create_user(email, name, password)
         return user
-
-    def _is_exist(self, email):
-        return User.objects.filter(email=email).exists()
 
 
 service = UserService()
+

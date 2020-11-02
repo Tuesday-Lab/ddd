@@ -4,9 +4,9 @@ from base import settings
 from base.db.mixin import TimestampMixin
 
 
-class Order(TimestampMixin):
+class OrderModel(TimestampMixin):
     id = models.BigAutoField(primary_key=True)
-    event = models.ForeignKey("event.Event", on_delete=models.CASCADE)
+    event = models.ForeignKey("event.EventModel", on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     status = models.CharField(max_length=10)
     pay_method = models.CharField(max_length=10)
@@ -16,4 +16,4 @@ class Order(TimestampMixin):
     refunded_at = models.DateTimeField(null=True)
 
     class Meta:
-        db_table = 'order'
+        db_table = "order"

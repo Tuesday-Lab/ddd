@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/ambv/black
+    rev: stable
+    hooks:
+      - id: black
+        language_version: python3.8
+        exclude: doc/|monitoring/|scripts/|tool/|test/
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: flake8
+        exclude: doc/|monitoring/|scripts/|tool/|test/
+  - repo: local
+    hooks:
+      - id: unit test
+        name: unit test
+        entry: python3 -m pytest -v
+        language: system
+        exclude: doc/|monitoring/|scripts/|tool/|test/
+        types: [ python ]

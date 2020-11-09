@@ -4,8 +4,9 @@ from typing import Optional
 from django.contrib.auth.models import User
 from django.db import transaction
 
-from event.models import Event, Money
-from event.vo import Currency, Schedule
+from base.exceptions import ConflictResource
+from event.models import Event
+from event.vo import Currency, Money, Schedule
 
 
 class EventService:
@@ -23,8 +24,7 @@ class EventService:
                end_time: datetime = None,
                ):
         if self._is_exists_duplicate_slug(slug):
-            #  TODO custom error handling
-            raise ValueError("already exist slug")
+            raise ConflictResource(detail="duplicate slug")
 
         event = Event.objects.create_new(
             title=title,

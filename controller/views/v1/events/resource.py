@@ -1,12 +1,14 @@
 from rest_framework import viewsets, routers
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from event.services import service as event_service
 from ..events.parameter import CreateEventParameters
-from ..events.schema import SampleResponseSerializer, EventResponse
+from ..events.schema import EventResponse
 
 
 class SampleViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
     def create(self, request):
         # TODO: 이것도 pydantic으로??
@@ -20,7 +22,11 @@ class SampleViewSet(viewsets.ViewSet):
                                          amount=validate_data.get("amount"),
                                          currency=validate_data.get("currency"),
                                          max_attendee_count=validate_data.get("max_attendee_count"),
-                                         description=validate_data.get("description")
+                                         description=validate_data.get("description"),
+                                         user=request.user,
+                                         start_time=validate_data.get("start_time"),
+                                         end_time=validate_data.get("end_time")
+
                                          )
         response = EventResponse(new_event)
         return Response({"event": response.data})

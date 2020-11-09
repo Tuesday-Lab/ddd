@@ -1,6 +1,11 @@
+from datetime import datetime
+from typing import Optional
+
+from django.contrib.auth.models import User
 from django.db import transaction
 
-from event.models import Event, Money, Currency
+from event.models import Event, Money
+from event.vo import Currency, Schedule
 
 
 class EventService:
@@ -11,12 +16,16 @@ class EventService:
                kind: str,
                amount: float,
                currency: Currency,
-               max_attendee_count: str,
-               description: str
+               max_attendee_count: Optional[int],
+               description: str,
+               user: User,
+               start_time: datetime = None,
+               end_time: datetime = None,
                ):
         if self._is_exists_duplicate_slug(slug):
             #  TODO custom error handling
             raise ValueError("already exist slug")
+
         event = Event.objects.create_new(
             title=title,
             slug=slug,
@@ -24,7 +33,9 @@ class EventService:
             money=Money(amount=amount,
                         currency=currency),
             max_attendee_count=max_attendee_count,
-            description=description
+            description=description,
+            user=user,
+            schedule=Schedule(start_time=start_time, end_time=end_time)
 
         )
         return event

@@ -14,10 +14,6 @@ def create_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
-# Custom User 모델을 사용하다 보니 매니저를 활용할 수 밖에 없어서
-# 레포 레이어 삭제..
-# -> 매니저&모델 사용하는걸 레포레이어로 감쌀까 했으나
-# 어떤건 매니저 어떤건 레포 등으로 분리될 것 같아 안나눔
 class UserManager(BaseUserManager):
     def create_user(self, email: str, password: str, name: str):
         if self.is_exist(email):
@@ -46,9 +42,7 @@ class UserModel(AbstractBaseUser):
     updated_at = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = "email"
-
     REQUIRED_FIELDS = ["name"]
-
     objects = UserManager()
 
     @property

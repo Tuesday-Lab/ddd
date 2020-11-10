@@ -24,8 +24,8 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def is_exist(self, email):
-        return UserModel.objects.filter(email=email).exists()
+    def is_exist(self, email) -> bool:
+        return self.get_queryset().filter(email=email).exists()
 
 
 class UserModel(AbstractBaseUser):

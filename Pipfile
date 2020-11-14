@@ -16,7 +16,7 @@ sqlparse = "==0.3.1"
 Django = "==3.1"
 Markdown = "==3.2.2"
 pydantic = "*"
-pytest-django = "*"
+python-dateutil = "*"
 
 [requires]
 python_version = "3.8"

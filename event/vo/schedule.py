@@ -9,7 +9,7 @@ class Schedule(BaseModel):
     end_time: datetime = None
 
     @root_validator
-    def check_passwords_match(cls, values):
+    def check_time(cls, values):
         start_time, end_time = values.get('start_time'), values.get('end_time')
         if start_time and end_time and start_time >= end_time:
             raise ValueError("start_time should be grater than end_time")

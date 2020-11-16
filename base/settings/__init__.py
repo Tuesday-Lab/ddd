@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "event.apps.EventConfig",
     "order.apps.OrderConfig",
     "user.apps.UserConfig",
+    "rest_auth",
 ]
 
 MIDDLEWARE = [
@@ -109,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = "ko-kr"
 
 TIME_ZONE = "UTC"
 
@@ -127,6 +128,7 @@ STATIC_URL = "/static/"
 DEFAULT_RENDERER_CLASSES = ("rest_framework.renderers.JSONRenderer",)
 
 CORS_ALLOW_CREDENTIALS = True
+REST_USE_HWT = True
 JWT_AUTH = {
     "JWT_ALLOW_REFRESH": True,
 }

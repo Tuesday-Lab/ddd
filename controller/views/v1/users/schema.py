@@ -1,5 +1,5 @@
 from rest_framework import serializers
 
 
-class EventResponse(serializers.Serializer):
+class SignupSchema(serializers.Serializer):
     id = serializers.IntegerField()

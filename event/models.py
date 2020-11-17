@@ -1,11 +1,35 @@
 from django.db import models
-# from django.contrib.gis.db import models as gis_models
 
 from base import settings
 from base.db.mixin import TimestampMixin
+from event.vo import Money
 
 
-class Event(TimestampMixin, models.Model):
+# from django.contrib.gis.db import models as gis_models
+
+
+class EventManager(models.Manager):
+    def create_new(
+        self,
+        title: str,
+        slug: str,
+        kind: str,
+        money: Money,
+        max_attendee_count: str,
+        description: str,
+    ):
+        return super(EventManager, self).create(
+            title=title,
+            slug=slug,
+            kind=kind,
+            amount=money.amount,
+            currency=money.currency,
+            max_attendee_count=max_attendee_count,
+            description=description,
+        )
+
+
+class EventModel(TimestampMixin, models.Model):
     class EventKind(models.TextChoices):
         NORMAL = "NORMAL"
         EDU = "EDU"
@@ -14,7 +38,7 @@ class Event(TimestampMixin, models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     kind = models.CharField(
         max_length=10,
         choices=EventKind.choices,
@@ -30,6 +54,7 @@ class Event(TimestampMixin, models.Model):
     description = models.TextField()
     registrable_time = models.DateTimeField(null=True)
     is_visible = models.BooleanField(default=False)
+    objects = EventManager()
 
     class Meta:
-        db_table = 'event'
+        db_table = "event"
